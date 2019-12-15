@@ -1,6 +1,16 @@
+import 'package:bytebank/models/contato.dart';
 import 'package:flutter/material.dart';
 
-class FormularioContato extends StatelessWidget {
+class FormularioContato extends StatefulWidget {
+  @override
+  _FormularioContatoState createState() => _FormularioContatoState();
+}
+
+class _FormularioContatoState extends State<FormularioContato> {
+  final TextEditingController _nomeController = TextEditingController();
+
+  final TextEditingController _numeroController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,12 +22,14 @@ class FormularioContato extends StatelessWidget {
         child: Column(
           children: <Widget>[
             TextField(
+              controller: _nomeController,
               decoration: InputDecoration(labelText: 'Nome Completo'),
               style: TextStyle(fontSize: 24),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: TextField(
+                controller: _numeroController,
                 decoration: InputDecoration(labelText: 'Número da Conta'),
                 keyboardType: TextInputType.number,
                 style: TextStyle(fontSize: 24),
@@ -29,7 +41,12 @@ class FormularioContato extends StatelessWidget {
                 width: double.maxFinite,
                 child: RaisedButton(
                   child: Text('Salvar'),
-                  onPressed: () {},
+                  onPressed: () {
+                    final String nome = _nomeController.text;
+                    final int numero = int.tryParse(_numeroController.text);
+                    Contato contato = Contato(nome,numero);
+                    Navigator.pop(context, contato);
+                  },
                 ),
               ),
             )

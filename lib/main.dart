@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           buttonTheme: ButtonThemeData(
               buttonColor: Colors.blueAccent[700],
               textTheme: ButtonTextTheme.primary)),
-      home: FormularioContato()
+      home: ListaContatos()
     );
   }
 }
