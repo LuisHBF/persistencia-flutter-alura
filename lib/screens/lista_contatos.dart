@@ -1,10 +1,10 @@
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/contato.dart';
 import 'package:bytebank/screens/formulario_contato.dart';
 import 'package:flutter/material.dart';
 
 class ListaContatos extends StatelessWidget {
 
-  final List<Contato> contatos = List();
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +12,19 @@ class ListaContatos extends StatelessWidget {
       appBar: AppBar(
         title: Text('Contatos'),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index){
-          return _itemContato(contatos[index]);
+      body: FutureBuilder(
+        future : todos(),
+        builder: (context, snapshot){
+          final List<Contato> contatos = snapshot.data;
+          return ListView.builder(
+            itemBuilder: (context, index){
+              return _itemContato(contatos[index]);
+            },
+            itemCount: contatos.length,
+          );
         },
-        itemCount: contatos.length,
       ),
+
       floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.of(context)
               .push(
