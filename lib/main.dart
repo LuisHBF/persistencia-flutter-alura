@@ -1,9 +1,18 @@
+import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/models/contato.dart';
 import 'package:bytebank/screens/dashboard.dart';
 import 'package:bytebank/screens/formulario_contato.dart';
 import 'package:bytebank/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+  salvar(Contato(0,'nome',123)).then((id) {
+    todos().then((contatos) {
+      debugPrint(contatos.toString());
+    });
+  });
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
