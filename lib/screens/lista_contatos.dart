@@ -4,8 +4,6 @@ import 'package:bytebank/screens/formulario_contato.dart';
 import 'package:flutter/material.dart';
 
 class ListaContatos extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,18 +11,31 @@ class ListaContatos extends StatelessWidget {
         title: Text('Contatos'),
       ),
       body: FutureBuilder(
-        future : todos(),
-        builder: (context, snapshot){
-          final List<Contato> contatos = snapshot.data;
-          return ListView.builder(
-            itemBuilder: (context, index){
-              return _itemContato(contatos[index]);
-            },
-            itemCount: contatos.length,
-          );
-        },
-      ),
+          future: todos(),
+          builder: (context, snapshot) {
+            debugPrint(snapshot.data.toString());
+            List<Contato> contatos = snapshot.data;
+            if (contatos != null) {
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  final Contato contato = contatos[index];
+                  return _itemContato(contato);
+                },
+                itemCount: contatos.length,
+              );
+            }
 
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  CircularProgressIndicator(),
+                  Text('Carregando...')
+                ],
+              ),
+            );
+          }),
       floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.of(context)
               .push(
@@ -35,11 +46,10 @@ class ListaContatos extends StatelessWidget {
   }
 }
 
-class _itemContato extends StatelessWidget{
+class _itemContato extends StatelessWidget {
+  final Contato contato;
 
-   final Contato contato;
-
-   _itemContato(this.contato);
+  _itemContato(this.contato);
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +66,4 @@ class _itemContato extends StatelessWidget{
       ),
     );
   }
-
-
 }
