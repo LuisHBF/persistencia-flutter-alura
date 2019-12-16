@@ -13,28 +13,36 @@ class ListaContatos extends StatelessWidget {
       body: FutureBuilder(
           future: todos(),
           builder: (context, snapshot) {
-            debugPrint(snapshot.data.toString());
-            List<Contato> contatos = snapshot.data;
-            if (contatos != null) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final Contato contato = contatos[index];
-                  return _itemContato(contato);
-                },
-                itemCount: contatos.length,
-              );
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                break;
+              case ConnectionState.waiting:
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                      Text('Carregando...')
+                    ],
+                  ),
+                );
+                break;
+              case ConnectionState.active:
+                break;
+              case ConnectionState.done:
+                List<Contato> contatos = snapshot.data;
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    final Contato contato = contatos[index];
+                    return _itemContato(contato);
+                  },
+                  itemCount: contatos.length,
+                );
+                break;
             }
 
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  CircularProgressIndicator(),
-                  Text('Carregando...')
-                ],
-              ),
-            );
+            return Text('Erro desconhecido!');
           }),
       floatingActionButton: FloatingActionButton(
           onPressed: () => Navigator.of(context)
