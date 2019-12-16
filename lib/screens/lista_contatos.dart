@@ -1,9 +1,13 @@
 import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contato_dao.dart';
 import 'package:bytebank/models/contato.dart';
 import 'package:bytebank/screens/formulario_contato.dart';
 import 'package:flutter/material.dart';
 
 class ListaContatos extends StatelessWidget {
+
+  final ContatoDAO _dao = ContatoDAO();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +15,7 @@ class ListaContatos extends StatelessWidget {
         title: Text('Contatos'),
       ),
       body: FutureBuilder(
-          future: todos(),
+          future: _dao.todos(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.none:
