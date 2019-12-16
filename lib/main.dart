@@ -6,15 +6,10 @@ import 'package:bytebank/screens/lista_contatos.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
-  salvar(Contato(0,'nome',123)).then((id) {
-    todos().then((contatos) {
-      debugPrint(contatos.toString());
-    });
-  });
+  runApp(BytebankApp());
 }
 
-class MyApp extends StatelessWidget {
+class BytebankApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
